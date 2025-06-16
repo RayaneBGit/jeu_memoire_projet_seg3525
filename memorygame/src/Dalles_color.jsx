@@ -24,15 +24,15 @@ function Dalles_color(parameter) {
   // Score actuel du joueur
   const [score, setScore] = useState(0);
 
-  // État gagné ou perdu du joueur
+  // État global du jeu (messages affichés : "Tu joues", "IA joue", etc.)
   const [etat, setEtat] = useState("jeu fermé");
 
   // Fonction appelée quand on clique sur "Commencer jeu"
   function commencerJeu() {
     refaireNiveauParametres();      // Réinitialise les clics et les états gagnant/perdu
     genererSequenceInitiale();      // Lance la première séquence IA (1 seule couleur)
-    setEtat("Commencement du jeu en cours...");
-    // ✅ Ajoute un autre setTimeout pour remettre le texte ensuite
+    setEtat("Commencement du jeu en cours..."); // Message d'intro temporaire
+    // ✅ Affiche "Monsieur IA joue..." 1.5 sec plus tard
     setTimeout(() => {
       setEtat("Monsieur Ia joue...");
     }, 1500);
@@ -104,45 +104,46 @@ function Dalles_color(parameter) {
     if (perdu) {
       console.log("J'ai perdu.");
       jouerSon("/sons/mixkit-software-interface-remove-2576.wav");
-      refaireTousLesNiveauxParametres();
-      genererSequenceInitiale(); // Redémarre à 1 couleur
+      refaireTousLesNiveauxParametres();     // Reset total
+      genererSequenceInitiale();             // Recommence à 1
       setEtat("Game Over! Recommencemons du jeu en cours...");
-      // ✅ Ajoute un autre setTimeout pour remettre le texte ensuite
-    setTimeout(() => {
-      setEtat("Monsieur Ia joue...");
-    }, 1500);
+      // ✅ Message après 1.5 sec pour dire que l’IA joue
+      setTimeout(() => {
+        setEtat("Monsieur Ia joue...");
+      }, 1500);
     }
   }, [perdu]);
 
-  // Quand on réussit la séquence, joue un son de victoire, augmente le score et ajoute une couleur
+  // Quand on réussit la séquence, joue un son, augmente le score et recommence
   useEffect(() => {
     if (sequenceGagner) {
       console.log("J'ai gagné !");
       setTimeout(() => {
         jouerSon("/sons/mixkit-game-bonus-reached-2065.wav");
         setScore((s) => s + 1);           // Incrémente le score
-        genererNouvelleSequence();        // Ajoute une nouvelle couleur
-        refaireNiveauParametres();        // Reset des clics pour la suite
+        genererNouvelleSequence();        // Nouvelle étape du jeu
+        refaireNiveauParametres();        // Reset partiel
         setEtat("Bravo, tu a gagné un niveau!");
-        // ✅ Ajoute un autre setTimeout pour remettre le texte ensuite
-      setTimeout(() => {
-        setEtat("Monsieur Ia joue...");
-      }, 1500);
-      }, 2000); // Petite pause avant la suite
+        // ✅ Après 1.5 sec, retour au tour de l'IA
+        setTimeout(() => {
+          setEtat("Monsieur Ia joue...");
+        }, 1500);
+      }, 2000); // Délai pour laisser le joueur savourer la victoire
     }
   }, [sequenceGagner]);
 
   // Chaque fois que la séquence change, l’IA la rejoue automatiquement
   useEffect(() => {
     if (sequence.length > 0) {
-      const DELAI_INITIAL = 2000;
-      const DELAI_ENTRE_COULEURS = 1000;
-      const DELAI_AJOUT_ERREUR_SYNCRONISATION = 1000;
-      jouerSequenceIA();
-         // ✅ Ajoute un autre setTimeout pour remettre le texte ensuite
+      const DELAI_INITIAL = 2000;                      // Pause avant que l'IA commence
+      const DELAI_ENTRE_COULEURS = 1000;               // Temps entre chaque couleur
+      const DELAI_AJOUT_ERREUR_SYNCRONISATION = 1000;  // Buffer pour éviter les chevauchements
+      jouerSequenceIA();                               // Joue la séquence IA
+
+      // ✅ Affiche "Ton tour de jouer" à la fin de l’animation IA
       setTimeout(() => {
         setEtat("Ton tour de jouer!");
-      }, DELAI_INITIAL + (DELAI_ENTRE_COULEURS*(sequence.length-1))+ DELAI_AJOUT_ERREUR_SYNCRONISATION);
+      }, DELAI_INITIAL + (DELAI_ENTRE_COULEURS * (sequence.length - 1)) + DELAI_AJOUT_ERREUR_SYNCRONISATION);
     }
   }, [sequence]);
 
@@ -164,28 +165,28 @@ function Dalles_color(parameter) {
     });
   }
 
-  // Anime la dalle visuellement en la "grossissant" brièvement
+  // Anime la dalle cliquée en la grossissant brièvement
   function animerDalleIA(couleur) {
     const dalle = document.querySelector(`.dalle_complet_${couleur}`);
 
-    dalle.classList.remove("dalle_grossir"); // On retire la classe si elle y est
-    void dalle.offsetWidth; // Force le navigateur à re-calculer le style (reflow)
-    dalle.classList.add("dalle_grossir"); // Puis on ajoute la classe pour jouer l'animation
+    dalle.classList.remove("dalle_grossir"); // On retire la classe si elle y est déjà
+    void dalle.offsetWidth; // Force un reflow pour relancer l'animation
+    dalle.classList.add("dalle_grossir"); // On applique l’animation
 
-    // Ensuite, on retire la classe après un délai (durée de l’animation)
+    // Retire l'effet après 0.5 sec
     setTimeout(() => {
       dalle.classList.remove("dalle_grossir");
     }, 500);
   }
 
-  // Réinitialise uniquement les paramètres du niveau en cours (clics, état gagné/perdu)
+  // Réinitialise les états du niveau actuel
   function refaireNiveauParametres() {
     setClicsJoueur([]);
     setSequenceGagner(false);
     setPerdu(false);
   }
 
-  // Réinitialise complètement le jeu (score, séquence, etc.)
+  // Réinitialise totalement le jeu
   function refaireTousLesNiveauxParametres() {
     console.log("Réinitialisation complète");
     refaireNiveauParametres();
@@ -200,10 +201,10 @@ function Dalles_color(parameter) {
     setEtat("Jeu reinitialisé");
   }
 
-  // Interface graphique du jeu (JSX)
+  // Interface graphique du jeu
   return (
     <div>
-      {/* Score affiché en haut */}
+      {/* Affichage du score */}
       <div className="div_scores">
         <p>Score: {score}</p>
       </div>
@@ -213,15 +214,18 @@ function Dalles_color(parameter) {
         <input type="button" value="Commencer jeu" onClick={commencerJeu} />
       </div>
 
-      {/* Les quatre dalles de couleur que le joueur peut cliquer */}
+      {/* Les 4 dalles de couleur */}
       <div className="groupe_dalles">
         <div className="dalle_complet_rouge" onClick={() => gererClic("rouge")}></div>
         <div className="dalle_complet_jaune" onClick={() => gererClic("jaune")}></div>
         <div className="dalle_complet_vert" onClick={() => gererClic("vert")}></div>
         <div className="dalle_complet_bleu" onClick={() => gererClic("bleu")}></div>
       </div>
+
+      {/* Message d'état du jeu */}
       <div className="div_etat_gagner_ou_perdu">{etat}</div>
-      {/* Bouton pour réinitialiser totalement le jeu */}
+
+      {/* Bouton pour réinitialiser le jeu */}
       <div className="div_btn_reinitialiser_jeu">
         <input type="button" className="btn_reinitialiser_jeu" value="Reinitialiser jeu" onClick={reinitialiserJeu} />
       </div>
@@ -229,5 +233,5 @@ function Dalles_color(parameter) {
   );
 }
 
-// Export du composant pour l’utiliser dans une autre partie de l’application
+// Export du composant pour qu’il puisse être utilisé ailleurs
 export default Dalles_color;

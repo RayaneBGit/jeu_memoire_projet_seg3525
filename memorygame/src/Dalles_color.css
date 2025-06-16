@@ -1,83 +1,97 @@
-
-
-.dalle_complet_rouge{
+/* Dalle rouge */
+.dalle_complet_rouge {
     background-color: rgb(255, 30, 30);
-    padding:3rem 3rem;
+    padding: 3rem 3rem;
     margin: 1rem;
 }
 
-.dalle_complet_bleu{
+/* Dalle bleue */
+.dalle_complet_bleu {
     background-color: rgb(0, 119, 255);
-    padding:3rem 3rem;
+    padding: 3rem 3rem;
     margin: 1rem;
 }
 
-.dalle_complet_vert{
+/* Dalle verte */
+.dalle_complet_vert {
     background-color: rgb(94, 255, 0);
-    padding:3rem 3rem;
+    padding: 3rem 3rem;
     margin: 1rem;
 }
 
-.dalle_complet_jaune{
+/* Dalle jaune */
+.dalle_complet_jaune {
     background-color: rgb(255, 230, 0);
-    padding:3rem 3rem;
+    padding: 3rem 3rem;
     margin: 1rem;
 }
 
-.dalle_complet_rouge:hover{
+/* Effets au survol et au clic de la dalle rouge */
+.dalle_complet_rouge:hover {
     background-color: rgb(226, 66, 66);
-    border: 2px solid black
+    border: 2px solid black;
 }
-.dalle_complet_rouge:active{
+.dalle_complet_rouge:active {
     background-color: rgb(180, 2, 2);
-    border: 2px solid black
+    border: 2px solid black;
 }
-.dalle_complet_jaune:hover{
+
+/* Effets au survol et au clic de la dalle jaune */
+.dalle_complet_jaune:hover {
     background-color: rgb(244, 216, 75);
-    border: 2px solid black
+    border: 2px solid black;
 }
-.dalle_complet_jaune:active{
+.dalle_complet_jaune:active {
     background-color: rgb(174, 178, 49);
-    border: 2px solid black
+    border: 2px solid black;
 }
-.dalle_complet_vert:hover{
+
+/* Effets au survol et au clic de la dalle verte */
+.dalle_complet_vert:hover {
     background-color: rgb(97, 219, 26);
-    border: 2px solid black
+    border: 2px solid black;
 }
-.dalle_complet_vert:active{
+.dalle_complet_vert:active {
     background-color: rgb(67, 145, 21);
-    border: 2px solid black
+    border: 2px solid black;
 }
-.dalle_complet_bleu:hover{
+
+/* Effets au survol et au clic de la dalle bleue */
+.dalle_complet_bleu:hover {
     background-color: rgb(35, 101, 231);
-    border: 2px solid black
+    border: 2px solid black;
 }
-.dalle_complet_bleu:active{
+.dalle_complet_bleu:active {
     background-color: rgb(5, 33, 102);
-    border: 2px solid black
+    border: 2px solid black;
 }
 
-.btn_reinitialiser_jeu{
-   padding:1rem;
-   background-color: rgb(230, 230, 230);
+/* Bouton de réinitialisation - état normal */
+.btn_reinitialiser_jeu {
+    padding: 1rem;
+    background-color: rgb(230, 230, 230);
 }
 
-.btn_reinitialiser_jeu:hover{
-   padding:1rem;
-   background-color: darkgrey;
+/* Bouton de réinitialisation - survol */
+.btn_reinitialiser_jeu:hover {
+    padding: 1rem;
+    background-color: darkgrey;
 }
 
-.btn_reinitialiser_jeu:active{
-   padding:1.2rem;
-   background-color: darkgrey;
+/* Bouton de réinitialisation - clic */
+.btn_reinitialiser_jeu:active {
+    padding: 1.2rem;
+    background-color: darkgrey;
 }
-.groupe_dalles{
+
+/* Conteneur des dalles en ligne (horizontal) */
+.groupe_dalles {
     display: flex;
-    flex-direction: line;
     margin: 2rem;
 }
 
-.div_scores{
+/* Bloc du score */
+.div_scores {
     padding: 1rem;
     background-color: aliceblue;
     text-align: center;
@@ -85,7 +99,8 @@
     font-weight: bold;
 }
 
-.div_etat_gagner_ou_perdu{
+/* Bloc pour afficher le message d’état (victoire, tour, etc.) */
+.div_etat_gagner_ou_perdu {
     padding: 1rem;
     background-color: rgb(255, 203, 203);
     text-align: center;
@@ -93,13 +108,14 @@
     font-weight: bold;
 }
 
-
+/* Animation de grossissement pour les dalles */
 @keyframes grossir {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); }
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
 }
 
+/* Classe utilisée pour jouer l'animation de grossissement */
 .dalle_grossir {
-  animation: grossir 0.3s ease;
+    animation: grossir 0.3s ease;
 }

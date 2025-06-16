@@ -1,3 +1,4 @@
-.conteneur_platforme{
+/* Conteneur flexible pour aligner les éléments horizontalement (par défaut) */
+.conteneur_platforme {
     display: flex;
 }
