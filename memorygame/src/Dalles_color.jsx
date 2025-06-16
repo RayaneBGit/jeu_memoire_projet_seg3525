@@ -1,105 +1,160 @@
+// Import du fichier CSS pour styliser les dalles de couleur
 import "./Dalles_color.css";
+
+// Import des hooks React nécessaires
 import { useEffect, useState } from "react";
 
+// Déclaration du composant principal du jeu Simon Says
 function Dalles_color(parameter) {
+  // Couleurs possibles pour les dalles
   const [couleursDalles] = useState(["rouge", "jaune", "vert", "bleu"]);
+
+  // La séquence actuelle à reproduire (générée par l'IA)
   const [sequence, setSequence] = useState([]);
+
+  // La séquence de clics faite par le joueur
   const [clicsJoueur, setClicsJoueur] = useState([]);
+
+  // Indique si le joueur a perdu
   const [perdu, setPerdu] = useState(false);
+
+  // Indique si le joueur a réussi à reproduire la séquence
   const [sequenceGagner, setSequenceGagner] = useState(false);
+
+  // Score actuel du joueur
   const [score, setScore] = useState(0);
 
+  // État gagné ou perdu du joueur
+  const [etat, setEtat] = useState("jeu fermé");
+
+  // Fonction appelée quand on clique sur "Commencer jeu"
   function commencerJeu() {
-    refaireNiveauParametres();
-    genererSequenceInitiale(); // ✅ Laisse jouerSequenceIA être appelée via useEffect
+    refaireNiveauParametres();      // Réinitialise les clics et les états gagnant/perdu
+    genererSequenceInitiale();      // Lance la première séquence IA (1 seule couleur)
+    setEtat("Commencement du jeu en cours...");
+    // ✅ Ajoute un autre setTimeout pour remettre le texte ensuite
+    setTimeout(() => {
+      setEtat("Monsieur Ia joue...");
+    }, 1500);
   }
 
+  // Fonction pour jouer un son à partir d'un fichier audio
   function jouerSon(fichier) {
     const audio = new Audio(fichier);
     audio.volume = 0.5;
     audio.play();
   }
 
+  // Génère la première couleur de la séquence (au début du jeu ou après une défaite)
   function genererSequenceInitiale() {
     let indice = Math.floor(Math.random() * couleursDalles.length);
     let couleur = couleursDalles[indice];
-    setSequence([couleur]);
+    setSequence([couleur]); // Nouvelle séquence = [1 couleur]
     console.log("Première couleur générée :", couleur);
   }
 
+  // Ajoute une nouvelle couleur à la séquence (quand le joueur a réussi)
   function genererNouvelleSequence() {
     let indice = Math.floor(Math.random() * couleursDalles.length);
     let couleur = couleursDalles[indice];
     const nouvelleSequence = [...sequence, couleur];
-    setSequence(nouvelleSequence);
+    setSequence(nouvelleSequence); // Met à jour la séquence avec une nouvelle couleur
     console.log("Nouvelle séquence :", nouvelleSequence);
   }
 
+  // Gère le clic du joueur sur une dalle de couleur
   function gererClic(couleur) {
-    const clics = [...clicsJoueur, couleur];
-    setClicsJoueur(clics);
+    const clics = [...clicsJoueur, couleur]; // Ajoute le clic à la liste
+    setClicsJoueur(clics); // Met à jour l’état
 
+    // Joue un son différent selon la couleur cliquée
     if (couleur === "rouge") jouerSon("/sons/mixkit-select-click-1109.wav");
     else if (couleur === "jaune") jouerSon("/sons/mixkit-interface-option-select-2573.wav");
     else if (couleur === "vert") jouerSon("/sons/mixkit-software-interface-back-2575.wav");
     else if (couleur === "bleu") jouerSon("/sons/mixkit-software-interface-start-2574.wav");
 
+    // Vérifie la séquence seulement si on n’a pas encore perdu
     if (!perdu) {
       for (let i = 0; i < clics.length; i++) {
         if (clics[i] !== sequence[i]) {
-          setPerdu(true);
+          setPerdu(true); // Mauvais clic → on perd
           return;
         }
       }
+      // Si le joueur a reproduit toute la séquence correctement
       if (clics.length === sequence.length) {
-        setSequenceGagner(true);
+        setSequenceGagner(true); // Indique qu’il a gagné ce niveau
       }
     }
   }
 
+  // Récupère les clics du joueur dans le localStorage au démarrage
   useEffect(() => {
     const sauvegarde = localStorage.getItem("clicsJoueur");
     if (sauvegarde) setClicsJoueur(JSON.parse(sauvegarde));
   }, []);
 
+  // Sauvegarde les clics du joueur à chaque modification
   useEffect(() => {
     localStorage.setItem("clicsJoueur", JSON.stringify(clicsJoueur));
   }, [clicsJoueur]);
 
+  // Quand on perd, joue un son et redémarre le jeu avec une nouvelle séquence
   useEffect(() => {
     if (perdu) {
       console.log("J'ai perdu.");
       jouerSon("/sons/mixkit-software-interface-remove-2576.wav");
       refaireTousLesNiveauxParametres();
-      genererSequenceInitiale(); // recommence à 1
+      genererSequenceInitiale(); // Redémarre à 1 couleur
+      setEtat("Game Over! Recommencemons du jeu en cours...");
+      // ✅ Ajoute un autre setTimeout pour remettre le texte ensuite
+    setTimeout(() => {
+      setEtat("Monsieur Ia joue...");
+    }, 1500);
     }
   }, [perdu]);
 
+  // Quand on réussit la séquence, joue un son de victoire, augmente le score et ajoute une couleur
   useEffect(() => {
     if (sequenceGagner) {
       console.log("J'ai gagné !");
       setTimeout(() => {
         jouerSon("/sons/mixkit-game-bonus-reached-2065.wav");
-        setScore((s) => s + 1);
-        genererNouvelleSequence(); // ⬅️ Appelle setSequence → useEffect → joue
-        refaireNiveauParametres();
-      }, 2000);
+        setScore((s) => s + 1);           // Incrémente le score
+        genererNouvelleSequence();        // Ajoute une nouvelle couleur
+        refaireNiveauParametres();        // Reset des clics pour la suite
+        setEtat("Bravo, tu a gagné un niveau!");
+        // ✅ Ajoute un autre setTimeout pour remettre le texte ensuite
+      setTimeout(() => {
+        setEtat("Monsieur Ia joue...");
+      }, 1500);
+      }, 2000); // Petite pause avant la suite
     }
   }, [sequenceGagner]);
 
+  // Chaque fois que la séquence change, l’IA la rejoue automatiquement
   useEffect(() => {
     if (sequence.length > 0) {
+      const DELAI_INITIAL = 2000;
+      const DELAI_ENTRE_COULEURS = 1000;
+      const DELAI_AJOUT_ERREUR_SYNCRONISATION = 1000;
       jouerSequenceIA();
+         // ✅ Ajoute un autre setTimeout pour remettre le texte ensuite
+      setTimeout(() => {
+        setEtat("Ton tour de jouer!");
+      }, DELAI_INITIAL + (DELAI_ENTRE_COULEURS*(sequence.length-1))+ DELAI_AJOUT_ERREUR_SYNCRONISATION);
     }
   }, [sequence]);
 
+  // Joue la séquence de l’IA avec des délais entre chaque couleur
   function jouerSequenceIA() {
     const DELAI_INITIAL = 2000;
     const DELAI_ENTRE_COULEURS = 1000;
 
     sequence.forEach((couleur, index) => {
       setTimeout(() => {
-        animerDalleIA(couleur);
+        animerDalleIA(couleur); // Animation visuelle
+        // Joue le son correspondant
         if (couleur === "rouge") jouerSon("/sons/mixkit-select-click-1109.wav");
         if (couleur === "jaune") jouerSon("/sons/mixkit-interface-option-select-2573.wav");
         if (couleur === "vert") jouerSon("/sons/mixkit-software-interface-back-2575.wav");
@@ -109,31 +164,28 @@ function Dalles_color(parameter) {
     });
   }
 
- function animerDalleIA(couleur) {
-  const dalle = document.querySelector(`.dalle_complet_${couleur}`);
+  // Anime la dalle visuellement en la "grossissant" brièvement
+  function animerDalleIA(couleur) {
+    const dalle = document.querySelector(`.dalle_complet_${couleur}`);
 
-  // 1. On retire la classe d’abord, si elle y est
-  dalle.classList.remove("dalle_grossir");
+    dalle.classList.remove("dalle_grossir"); // On retire la classe si elle y est
+    void dalle.offsetWidth; // Force le navigateur à re-calculer le style (reflow)
+    dalle.classList.add("dalle_grossir"); // Puis on ajoute la classe pour jouer l'animation
 
-  // 2. On force le "reflow" du navigateur
-  void dalle.offsetWidth;
+    // Ensuite, on retire la classe après un délai (durée de l’animation)
+    setTimeout(() => {
+      dalle.classList.remove("dalle_grossir");
+    }, 500);
+  }
 
-  // 3. Puis on rajoute la classe
-  dalle.classList.add("dalle_grossir");
-
-  // 4. Et on la retire plus tard pour la rejouer plus tard encore si besoin
-  setTimeout(() => {
-    dalle.classList.remove("dalle_grossir");
-  }, 500); // durée de ton animation en ms
-}
-
-
+  // Réinitialise uniquement les paramètres du niveau en cours (clics, état gagné/perdu)
   function refaireNiveauParametres() {
     setClicsJoueur([]);
     setSequenceGagner(false);
     setPerdu(false);
   }
 
+  // Réinitialise complètement le jeu (score, séquence, etc.)
   function refaireTousLesNiveauxParametres() {
     console.log("Réinitialisation complète");
     refaireNiveauParametres();
@@ -141,25 +193,35 @@ function Dalles_color(parameter) {
     setSequence([]);
   }
 
+  // Fonction appelée quand on clique sur "Réinitialiser jeu"
   function reinitialiserJeu() {
     jouerSon("/sons/mixkit-retro-arcade-casino-notification-211.wav");
     refaireTousLesNiveauxParametres();
+    setEtat("Jeu reinitialisé");
   }
 
+  // Interface graphique du jeu (JSX)
   return (
     <div>
+      {/* Score affiché en haut */}
       <div className="div_scores">
         <p>Score: {score}</p>
       </div>
+
+      {/* Bouton pour commencer le jeu */}
       <div className="div_btn_commencer_jeu">
         <input type="button" value="Commencer jeu" onClick={commencerJeu} />
       </div>
+
+      {/* Les quatre dalles de couleur que le joueur peut cliquer */}
       <div className="groupe_dalles">
         <div className="dalle_complet_rouge" onClick={() => gererClic("rouge")}></div>
         <div className="dalle_complet_jaune" onClick={() => gererClic("jaune")}></div>
         <div className="dalle_complet_vert" onClick={() => gererClic("vert")}></div>
         <div className="dalle_complet_bleu" onClick={() => gererClic("bleu")}></div>
       </div>
+      <div className="div_etat_gagner_ou_perdu">{etat}</div>
+      {/* Bouton pour réinitialiser totalement le jeu */}
       <div className="div_btn_reinitialiser_jeu">
         <input type="button" className="btn_reinitialiser_jeu" value="Reinitialiser jeu" onClick={reinitialiserJeu} />
       </div>
@@ -167,4 +229,5 @@ function Dalles_color(parameter) {
   );
 }
 
+// Export du composant pour l’utiliser dans une autre partie de l’application
 export default Dalles_color;
