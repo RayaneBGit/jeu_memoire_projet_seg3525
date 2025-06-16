@@ -109,13 +109,24 @@ function Dalles_color(parameter) {
     });
   }
 
-  function animerDalleIA(couleur) {
-    const dalle = document.querySelector(`.dalle_complet_${couleur}`);
-    dalle.classList.add("dalle_grossir");
-    setTimeout(() => {
-      dalle.classList.remove("dalle_grossir");
-    }, 1000);
-  }
+ function animerDalleIA(couleur) {
+  const dalle = document.querySelector(`.dalle_complet_${couleur}`);
+
+  // 1. On retire la classe d’abord, si elle y est
+  dalle.classList.remove("dalle_grossir");
+
+  // 2. On force le "reflow" du navigateur
+  void dalle.offsetWidth;
+
+  // 3. Puis on rajoute la classe
+  dalle.classList.add("dalle_grossir");
+
+  // 4. Et on la retire plus tard pour la rejouer plus tard encore si besoin
+  setTimeout(() => {
+    dalle.classList.remove("dalle_grossir");
+  }, 500); // durée de ton animation en ms
+}
+
 
   function refaireNiveauParametres() {
     setClicsJoueur([]);
