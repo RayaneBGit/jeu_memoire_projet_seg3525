@@ -1,12 +1,14 @@
-
+import Platforme from "./Platforme";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>Jeu de memoire ici! </p>
-
+        <h1>Jeu de memoire ici! </h1>
       </header>
+      <main>
+      <Platforme nom_jeu="jeu memoire simon says"></Platforme>
+      </main>
     </div>
   );
 }
