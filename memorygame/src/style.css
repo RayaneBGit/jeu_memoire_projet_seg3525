@@ -1,117 +1,23 @@
+/* 🎨 Importe la police Poppins depuis Google Fonts (400 = normal, 600 = bold) */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
+/* 🌍 Style général du body (toute la page) */
 body {
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(to right, #1e3c72, #2a5298);
-  margin: 0;
-  padding: 0;
-  color: white;
+  font-family: 'Poppins', sans-serif; /* Police élégante et moderne */
+  background: linear-gradient(to right, #1e3c72, #2a5298); /* Dégradé bleu foncé → bleu plus clair */
+  margin: 0; /* Supprime l’espace autour du body */
+  padding: 0; /* Supprime l’espace intérieur */
+  color: white; /* Texte blanc par défaut */
 }
 
+/* 🧠 Style du titre principal de l'application */
 .App-header h1 {
-  text-align: center;
-  font-size: 3rem;
-  padding: 2rem 1rem;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border-radius: 12px;
-  margin: 2rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
-}
-
-.div_scores {
-  background: rgba(255, 255, 255, 0.15);
-  padding: 1rem 2rem;
-  border-radius: 10px;
-  text-align: center;
-  margin: 1rem auto;
-  width: fit-content;
-  font-weight: bold;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-}
-
-.groupe_dalles {
-  display: grid;
-  grid-template-columns: repeat(2, 150px);
-  gap: 20px;
-  justify-content: center;
-  margin: 3rem 0;
-}
-
-[class^="dalle_complet_"] {
-  width: 150px;
-  height: 150px;
-  border-radius: 20px;
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
-  cursor: pointer;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
-}
-
-[class^="dalle_complet_"]:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
-}
-
-.div_etat_gagner_ou_perdu {
-  text-align: center;
-  padding: 1rem;
-  margin: 2rem auto;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(6px);
-  border-radius: 10px;
-  font-size: 1.2rem;
-  width: 80%;
-}
-
-.div_btn_commencer_jeu input,
-.div_btn_reinitialiser_jeu input {
-  padding: 1rem 2rem;
-  margin: 1rem;
-  font-size: 1rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
-  color: #333;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.div_btn_commencer_jeu input:hover,
-.div_btn_reinitialiser_jeu input:hover {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  color: white;
-}
-/* Regroupe les boutons dans un layout centré */
-.boutons-container {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  flex-wrap: wrap;
-  margin-bottom: 2rem;
-}
-
-/* Améliore l’apparence du bouton de score */
-.div_scores {
-  margin: 1rem auto;
-  padding: 1rem 2rem;
-  font-weight: bold;
-  text-align: center;
-  background: rgba(255, 255, 255, 0.85);
-  border-radius: 12px;
-  color: #000;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-}
-
-/* Message d’état */
-.div_etat_gagner_ou_perdu {
-  margin: 1rem auto;
-  padding: 1rem;
-  text-align: center;
-  border-radius: 10px;
-  background: rgba(255, 203, 203, 0.9);
-  color: #000;
-  font-weight: bold;
-  width: fit-content;
+  text-align: center; /* Centre horizontalement le texte */
+  font-size: 3rem; /* Taille de police grande (≈ 48px) */
+  padding: 2rem 1rem; /* Espace intérieur autour du texte */
+  background: rgba(255, 255, 255, 0.05); /* Fond blanc très translucide */
+  backdrop-filter: blur(10px); /* Flou derrière le fond pour un effet verre givré */
+  border-radius: 12px; /* Coins arrondis */
+  margin: 2rem; /* Espace extérieur autour du titre */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25); /* Ombre portée pour un effet flottant */
 }

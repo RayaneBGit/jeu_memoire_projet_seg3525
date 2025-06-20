@@ -202,39 +202,85 @@ function Dalles_color(parameter) {
     setEtat("Jeu reinitialisé");
   }
 
-  // Interface graphique du jeu
-  return (
-    <div>
-      {/* Affichage du score */}
+
+     // Interface graphique principale du jeu
+return (
+  <div>
+
+    {/* Bloc affichant le score et l’état du jeu, côte à côte */}
+    <div className="div_affichages_score_etat_jeu">
+
+      {/* Affichage dynamique du score du joueur */}
       <div className="div_scores">
         <p>Score: {score}</p>
       </div>
 
-      {/* Bouton pour commencer le jeu */}
-      <div className="div_btn_commencer_jeu">
-        <input type="button" value="Commencer jeu" onClick={commencerJeu} />
+      {/* Message d'état du jeu (ex: "jeu fermé", "Ton tour", "IA joue...", etc.) */}
+      <div className="div_etat_gagner_ou_perdu">
+        <p>{etat}</p>
       </div>
 
-      {/* Les 4 dalles de couleur */}
-      <div className="groupe_dalles">
-        <div className="dalle_complet_rouge" onClick={() => gererClic("rouge")}></div>
-        <div className="dalle_complet_jaune" onClick={() => gererClic("jaune")}></div>
-        <div className="dalle_complet_vert" onClick={() => gererClic("vert")}></div>
-        <div className="dalle_complet_bleu" onClick={() => gererClic("bleu")}></div>
-      </div>
-
-      {/* Message d'état du jeu */}
-      <div className="div_etat_gagner_ou_perdu">{etat}</div>
-
-      {/* Bouton pour réinitialiser le jeu */}
-      <div className="div_btn_reinitialiser_jeu">
-        <input type="button" className="btn_reinitialiser_jeu" value="Reinitialiser jeu" onClick={reinitialiserJeu} />
-      </div>
     </div>
-  );
+
+    {/* Les 4 dalles de couleur à cliquer, disposées en grille */}
+    <div className="groupe_dalles">
+
+      {/* Dalle rouge */}
+      <div
+        className="dalle_complet_rouge"
+        onClick={() => gererClic("rouge")}
+      ></div>
+
+      {/* Dalle jaune */}
+      <div
+        className="dalle_complet_jaune"
+        onClick={() => gererClic("jaune")}
+      ></div>
+
+      {/* Dalle verte */}
+      <div
+        className="dalle_complet_vert"
+        onClick={() => gererClic("vert")}
+      ></div>
+
+      {/* Dalle bleue */}
+      <div
+        className="dalle_complet_bleu"
+        onClick={() => gererClic("bleu")}
+      ></div>
+
+    </div>
+
+    {/* Groupe de boutons du bas : commencer et réinitialiser */}
+    <div className="div_tous_boutons_jeu">
+
+      {/* Bouton pour démarrer le jeu (première séquence IA) */}
+      <div className="div_btn_commencer_jeu">
+        <input
+          type="button"
+          value="Commencer jeu"
+          onClick={commencerJeu}
+        />
+      </div>
+
+      {/* Bouton pour réinitialiser complètement le jeu */}
+      <div className="div_btn_reinitialiser_jeu">
+        <input
+          type="button"
+          className="btn_reinitialiser_jeu"
+          value="Reinitialiser jeu"
+          onClick={reinitialiserJeu}
+        />
+      </div>
+
+    </div>
+
+  </div>
+);
+
+
 }
 
 // Export du composant pour qu’il puisse être utilisé ailleurs
 export default Dalles_color;
 
-import './style.css';

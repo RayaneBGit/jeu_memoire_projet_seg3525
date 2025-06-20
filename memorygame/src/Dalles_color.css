@@ -1,32 +1,29 @@
-/* Dalle rouge */
+/* Couleurs de base pour chaque dalle */
 .dalle_complet_rouge {
     background-color: rgb(255, 30, 30);
     padding: 3rem 3rem;
     margin: 1rem;
 }
 
-/* Dalle bleue */
 .dalle_complet_bleu {
     background-color: rgb(0, 119, 255);
     padding: 3rem 3rem;
     margin: 1rem;
 }
 
-/* Dalle verte */
 .dalle_complet_vert {
     background-color: rgb(94, 255, 0);
     padding: 3rem 3rem;
     margin: 1rem;
 }
 
-/* Dalle jaune */
 .dalle_complet_jaune {
     background-color: rgb(255, 230, 0);
     padding: 3rem 3rem;
     margin: 1rem;
 }
 
-/* Effets au survol et au clic de la dalle rouge */
+/* Hover & Active : Changement de couleur + ajout de bordure noire lors du survol et du clic */
 .dalle_complet_rouge:hover {
     background-color: rgb(226, 66, 66);
     border: 2px solid black;
@@ -36,7 +33,6 @@
     border: 2px solid black;
 }
 
-/* Effets au survol et au clic de la dalle jaune */
 .dalle_complet_jaune:hover {
     background-color: rgb(244, 216, 75);
     border: 2px solid black;
@@ -46,7 +42,6 @@
     border: 2px solid black;
 }
 
-/* Effets au survol et au clic de la dalle verte */
 .dalle_complet_vert:hover {
     background-color: rgb(97, 219, 26);
     border: 2px solid black;
@@ -56,7 +51,6 @@
     border: 2px solid black;
 }
 
-/* Effets au survol et au clic de la dalle bleue */
 .dalle_complet_bleu:hover {
     background-color: rgb(35, 101, 231);
     border: 2px solid black;
@@ -66,56 +60,114 @@
     border: 2px solid black;
 }
 
-/* Bouton de réinitialisation - état normal */
-.btn_reinitialiser_jeu {
-    padding: 1rem;
-    background-color: rgb(230, 230, 230);
+/* Conteneur des deux boutons du bas */
+.div_tous_boutons_jeu {
+  display: flex;
+  justify-content: center;
+  gap: 4.5rem;
 }
 
-/* Bouton de réinitialisation - survol */
-.btn_reinitialiser_jeu:hover {
-    padding: 1rem;
-    background-color: darkgrey;
+/* Conteneur du bloc Score + État */
+.div_affichages_score_etat_jeu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7rem;
+  padding: 0.5rem 1.5rem;
+  border-radius: 12px;
+  width: fit-content;
+  margin: 0 auto;
 }
 
-/* Bouton de réinitialisation - clic */
-.btn_reinitialiser_jeu:active {
-    padding: 1.2rem;
-    background-color: darkgrey;
-}
-
-/* Conteneur des dalles en ligne (horizontal) */
-.groupe_dalles {
-    display: flex;
-    margin: 2rem;
-}
-
-/* Bloc du score */
+/* Affichage du score */
 .div_scores {
-    padding: 1rem;
-    background-color: aliceblue;
-    text-align: center;
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: bold;
+  background: #e3eaf5;
+  color: #222;
+  padding: 0.8rem 1.2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  min-width: 140px;
+  text-align: center;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
 }
 
-/* Bloc pour afficher le message d’état (victoire, tour, etc.) */
+/* Affichage de l'état ("jeu fermé", "ton tour", etc.) */
 .div_etat_gagner_ou_perdu {
-    padding: 1rem;
-    background-color: rgb(255, 203, 203);
-    text-align: center;
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: bold;
+  background: #e3eaf5;
+  color: #222;
+  padding: 0.8rem 1.2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  min-width: 140px;
+  text-align: center;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
 }
 
-/* Animation de grossissement pour les dalles */
+/* Grille des 4 dalles de couleur */
+.groupe_dalles {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Deux colonnes flexibles */
+  gap: 10px;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+/* Style de base pour toutes les dalles */
+[class^="dalle_complet_"] {
+  width: 150px;
+  height: 150px;
+  border-radius: 20px;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Effet d’agrandissement au survol */
+[class^="dalle_complet_"]:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
+}
+
+/* Style des deux boutons du bas (commencer et réinitialiser) */
+.div_btn_commencer_jeu input,
+.div_btn_reinitialiser_jeu input {
+  padding: 1rem 2rem;
+  margin: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Hover des boutons : couleur rose orangé + texte blanc */
+.div_btn_commencer_jeu input:hover,
+.div_btn_reinitialiser_jeu input:hover {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+}
+
+/* Effet de clic (pressé) : petit enfoncement et rétrécissement */
+.div_btn_commencer_jeu input:active,
+.div_btn_reinitialiser_jeu input:active {
+  transform: translateY(3px) scale(0.98);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Animation de grossissement utilisée quand l'IA joue une dalle */
 @keyframes grossir {
     0% { transform: scale(1); }
     50% { transform: scale(1.2); }
     100% { transform: scale(1); }
 }
 
-/* Classe utilisée pour jouer l'animation de grossissement */
+/* Classe appliquée dynamiquement pour déclencher l'animation */
 .dalle_grossir {
     animation: grossir 0.3s ease;
 }

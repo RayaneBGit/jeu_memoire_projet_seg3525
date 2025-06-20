@@ -8,7 +8,7 @@ function App() {
     
       {/* En-tête de la page (titre principal) */}
       <header className="App-header">
-        <h1>Jeu de memoire ici! </h1>
+        <h1>Jeu de memoire Simon Says</h1>
       </header>
 
       {/* Zone principale de l'application */}
