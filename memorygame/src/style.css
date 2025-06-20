@@ -1,7 +1,7 @@
-/* 🎨 Importe la police Poppins depuis Google Fonts (400 = normal, 600 = bold) */
+/* Importe la police Poppins depuis Google Fonts (400 = normal, 600 = bold) */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-/* 🌍 Style général du body (toute la page) */
+/* Style général du body (toute la page) */
 body {
   font-family: 'Poppins', sans-serif; /* Police élégante et moderne */
   background: linear-gradient(to right, #1e3c72, #2a5298); /* Dégradé bleu foncé → bleu plus clair */
@@ -10,7 +10,7 @@ body {
   color: white; /* Texte blanc par défaut */
 }
 
-/* 🧠 Style du titre principal de l'application */
+/* Style du titre principal de l'application */
 .App-header h1 {
   text-align: center; /* Centre horizontalement le texte */
   font-size: 3rem; /* Taille de police grande (≈ 48px) */
