@@ -1,3 +1,4 @@
+import './style.css';
 // Import du fichier CSS pour styliser les dalles de couleur
 import "./Dalles_color.css";
 
@@ -235,3 +236,5 @@ function Dalles_color(parameter) {
 
 // Export du composant pour qu’il puisse être utilisé ailleurs
 export default Dalles_color;
+
+import './style.css';
