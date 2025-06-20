@@ -107,7 +107,7 @@ function Dalles_color(parameter) {
       jouerSon("/sons/mixkit-software-interface-remove-2576.wav");
       refaireTousLesNiveauxParametres();     // Reset total
       genererSequenceInitiale();             // Recommence à 1
-      setEtat("Game Over! Recommencemons du jeu en cours...");
+      setEtat("Game Over!");
       // ✅ Message après 1.5 sec pour dire que l’IA joue
       setTimeout(() => {
         setEtat("Monsieur Ia joue...");
