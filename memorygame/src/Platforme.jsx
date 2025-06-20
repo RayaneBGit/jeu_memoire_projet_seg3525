@@ -1,3 +1,4 @@
+import './style.css';
 // Importe le composant du jeu Simon Says
 import Dalles_color from "./Dalles_color";
 
@@ -23,3 +24,4 @@ function Platforme(parameter) {
 
 // Rend le composant utilisable ailleurs
 export default Platforme;
+
