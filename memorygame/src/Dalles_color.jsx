@@ -28,6 +28,9 @@ function Dalles_color(parameter) {
   // État global du jeu (messages affichés : "Tu joues", "IA joue", etc.)
   const [etat, setEtat] = useState("jeu fermé");
 
+  // État qui veut dire que c'est permissible de jouer vs non
+  const [permission, setPermission] = useState(false);
+
   // Fonction appelée quand on clique sur "Commencer jeu"
   function commencerJeu() {
     refaireNiveauParametres();      // Réinitialise les clics et les états gagnant/perdu
@@ -63,6 +66,8 @@ function Dalles_color(parameter) {
     console.log("Nouvelle séquence :", nouvelleSequence);
   }
 
+
+   
   // Gère le clic du joueur sur une dalle de couleur
   function gererClic(couleur) {
     const clics = [...clicsJoueur, couleur]; // Ajoute le clic à la liste
@@ -107,13 +112,15 @@ function Dalles_color(parameter) {
       jouerSon("/sons/mixkit-software-interface-remove-2576.wav");
       refaireTousLesNiveauxParametres();     // Reset total
       genererSequenceInitiale();             // Recommence à 1
-      setEtat("Game Over!");
+      setEtat("Game Over!");                 // Mettre l'état de perte au joueur
       // ✅ Message après 1.5 sec pour dire que l’IA joue
       setTimeout(() => {
         setEtat("Monsieur Ia joue...");
       }, 1500);
     }
   }, [perdu]);
+
+
 
   // Quand on réussit la séquence, joue un son, augmente le score et recommence
   useEffect(() => {
@@ -139,7 +146,8 @@ function Dalles_color(parameter) {
       const DELAI_INITIAL = 2000;                      // Pause avant que l'IA commence
       const DELAI_ENTRE_COULEURS = 1000;               // Temps entre chaque couleur
       const DELAI_AJOUT_ERREUR_SYNCRONISATION = 1000;  // Buffer pour éviter les chevauchements
-      jouerSequenceIA();                               // Joue la séquence IA
+  
+      jouerSequenceIA();                            // Joue la séquence IA
 
       // ✅ Affiche "Ton tour de jouer" à la fin de l’animation IA
       setTimeout(() => {
@@ -201,8 +209,6 @@ function Dalles_color(parameter) {
     refaireTousLesNiveauxParametres();
     setEtat("Jeu reinitialisé");
   }
-
-
      // Interface graphique principale du jeu
 return (
   <div>
